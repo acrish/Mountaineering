@@ -25,36 +25,31 @@ public class ExpeditionMap implements Serializable{
     @Column(name = "mountain")
     private String mountain;
 
-    public String getMountain() {
-        return mountain;
-    }
-
-    public void setMountain(String mountain) {
-        this.mountain = mountain;
-    }
-
     @Column(name = "issue_date")
     private Date issueDate;
 
     @Column(name = "picture_url")
     private String picUrl;
 
-    public Set<Expedition> getExpeditions() {
-        return expeditions;
-    }
-
-    public void setExpeditions(Set<Expedition> expeditions) {
-        this.expeditions = expeditions;
-    }
-
     @OneToMany(cascade={CascadeType.ALL})
     @JoinColumn(name = "map_id")
     private Set<Expedition> expeditions;
+
+    public ExpeditionMap() {
+    }
 
     public ExpeditionMap(String mountain, Date issueDate, String picUrl) {
         this.mountain = mountain;
         this.issueDate = issueDate;
         this.picUrl = picUrl;
+    }
+
+    public String getMountain() {
+        return mountain;
+    }
+
+    public void setMountain(String mountain) {
+        this.mountain = mountain;
     }
 
     public Date getIssueDate() {
@@ -73,5 +68,12 @@ public class ExpeditionMap implements Serializable{
         this.picUrl = picUrl;
     }
 
+    public Set<Expedition> getExpeditions() {
+        return expeditions;
+    }
+
+    public void setExpeditions(Set<Expedition> expeditions) {
+        this.expeditions = expeditions;
+    }
 
 }

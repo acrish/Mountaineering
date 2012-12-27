@@ -25,10 +25,10 @@ public class Expedition implements Serializable {
     @Column(name="description")
     private String description;
 
-    /*@ManyToOne
-    @JoinColumn(name="map_id")*//*, insertable = false, updatable = false,
-            nullable = false)*//*
-    private ExpeditionMap expMap;*/
+    @ManyToOne
+    @JoinColumn(name="map_id")/*, insertable = false, updatable = false,
+            nullable = false)*/
+    private ExpeditionMap expMap;
 
     /*@OneToMany(cascade={CascadeType.ALL})
     @JoinColumn(name = "map_id")
@@ -62,13 +62,13 @@ public class Expedition implements Serializable {
         this.description = description;
     }
 
-    /*public ExpeditionMap getExpMap() {
+    public ExpeditionMap getExpMap() {
         return expMap;
     }
 
     public void setExpMap(ExpeditionMap expMap) {
         this.expMap = expMap;
-    }*/
+    }
 
     public String toString() {
         return String.format("%s (%s)");

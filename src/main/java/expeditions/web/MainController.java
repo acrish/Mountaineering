@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,7 +27,6 @@ public class MainController {
     public ModelAndView init() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("hello");
-        mav.addObject("tables", Arrays.asList(new String[]{"Expeditions", "Participants", "Registries"}));
 
         return mav;
     }
@@ -37,14 +37,14 @@ public class MainController {
         mav.setViewName("display_tables");
 
         ExpeditionMap map = new ExpeditionMap("Grosslockner", new Date(1990, 7, 26), "some_map_url");
-        /*map.setExpeditions(new ArrayList<Expedition>());
-        map.getExpeditions().add(expedition);*/
         transactionManager.addExpeditionMap(map);
-        mav.addObject("maps", transactionManager.getAllExpeditionMaps());
+        List<ExpeditionMap> maps = transactionManager.getAllExpeditionMaps();
+        System.err.println(maps);
+        mav.addObject("maps", maps);
 
 
         Expedition expedition = new Expedition("tura Iarna 2012", "Grosslockner Austria Zelmatt");
-        /*expedition.setExpMap(map);*/
+        expedition.setExpMap(map);
         transactionManager.addExpedition(expedition);
 
         mav.addObject("expeditions", transactionManager.getAllExpeditions());

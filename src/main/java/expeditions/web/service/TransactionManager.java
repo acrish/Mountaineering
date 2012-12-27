@@ -89,11 +89,11 @@ public class TransactionManager {
         return result;
     }
 
-    public List<Expedition> getAllExpeditionMaps() {
+    public List<ExpeditionMap> getAllExpeditionMaps() {
         SessionFactory sf = HibernateUtil.getSessionFactory();
         Session session = sf.openSession();
         Transaction tx = null;
-        List<Expedition> result = null;
+        List<ExpeditionMap> result = null;
 
         try {
             // create session
@@ -102,6 +102,7 @@ public class TransactionManager {
                     "from ExpeditionMap").list();
             tx.commit();
         } catch (Exception exp) {
+            System.err.println("Error when retrieving maps!!!\n\t" + exp);
             if (tx != null) {
                 tx.rollback();
             }
