@@ -26,8 +26,8 @@ public class Expedition implements Serializable {
     private String description;
 
     /*@ManyToOne
-    @JoinColumn(name="map_id", insertable = false, updatable = false,
-            nullable = false)
+    @JoinColumn(name="map_id")*//*, insertable = false, updatable = false,
+            nullable = false)*//*
     private ExpeditionMap expMap;*/
 
     /*@OneToMany(cascade={CascadeType.ALL})
@@ -69,4 +69,9 @@ public class Expedition implements Serializable {
     public void setExpMap(ExpeditionMap expMap) {
         this.expMap = expMap;
     }*/
+
+    public String toString() {
+        return String.format("%s (%s)");
+    }
+
 }

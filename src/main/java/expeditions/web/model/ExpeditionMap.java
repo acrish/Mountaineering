@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,7 +14,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@Table(name = "ExpeditionMaps")
+@Table(name = "EXPEDITIONMAPS")
 public class ExpeditionMap implements Serializable{
 
     @Id
@@ -21,17 +22,37 @@ public class ExpeditionMap implements Serializable{
     @GeneratedValue
     private Integer id;
 
+    @Column(name = "mountain")
+    private String mountain;
+
+    public String getMountain() {
+        return mountain;
+    }
+
+    public void setMountain(String mountain) {
+        this.mountain = mountain;
+    }
+
     @Column(name = "issue_date")
     private Date issueDate;
 
     @Column(name = "picture_url")
     private String picUrl;
 
-    /*@OneToMany(cascade={CascadeType.ALL})
-    @JoinColumn(name = "map_id")
-    private List<Expedition> expeditions;*/
+    public Set<Expedition> getExpeditions() {
+        return expeditions;
+    }
 
-    public ExpeditionMap(Date issueDate, String picUrl) {
+    public void setExpeditions(Set<Expedition> expeditions) {
+        this.expeditions = expeditions;
+    }
+
+    @OneToMany(cascade={CascadeType.ALL})
+    @JoinColumn(name = "map_id")
+    private Set<Expedition> expeditions;
+
+    public ExpeditionMap(String mountain, Date issueDate, String picUrl) {
+        this.mountain = mountain;
         this.issueDate = issueDate;
         this.picUrl = picUrl;
     }
@@ -51,4 +72,6 @@ public class ExpeditionMap implements Serializable{
     public void setPicUrl(String picUrl) {
         this.picUrl = picUrl;
     }
+
+
 }
