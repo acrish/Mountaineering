@@ -31,6 +31,9 @@ public class Participant implements Serializable{
     @JoinColumn(name = "map_id")
     private List<Registry> registries;
 
+    public Participant() {
+    }
+
     public Participant(String name, Date birthDate) {
         this.name = name;
         this.birthDate = birthDate;
@@ -55,12 +58,15 @@ public class Participant implements Serializable{
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
-
     public List<Registry> getRegistries() {
         return registries;
     }
 
     public void setRegistries(List<Registry> registries) {
         this.registries = registries;
+    }
+
+    public String toString() {
+        return String.format("%d) %s - %s", id, name, birthDate.toString());
     }
 }

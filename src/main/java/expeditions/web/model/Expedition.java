@@ -26,13 +26,22 @@ public class Expedition implements Serializable {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name="map_id")/*, insertable = false, updatable = false,
-            nullable = false)*/
+    @JoinColumn(name="map_id",nullable = false)
     private ExpeditionMap expMap;
 
-    /*@OneToMany(cascade={CascadeType.ALL})
+    public String getMountainName() {
+        return mountainName;
+    }
+
+    public void setMountainName(String mountainName) {
+        this.mountainName = mountainName;
+    }
+
+    private String mountainName;
+
+    @OneToMany(cascade={CascadeType.ALL})
     @JoinColumn(name = "map_id")
-    private List<Registry> registries;*/
+    private List<Registry> registries;
 
     public Expedition() {
     }
@@ -71,7 +80,25 @@ public class Expedition implements Serializable {
     }
 
     public String toString() {
-        return String.format("%s (%s)");
+        return String.format("%d) %s (%s)", expId, name, description);
     }
 
+    @ManyToOne(optional = true)
+    private ExpeditionMap expeditionMaps;
+
+    public ExpeditionMap getExpeditionMaps() {
+        return expeditionMaps;
+    }
+
+    public void setExpeditionMaps(ExpeditionMap expeditionMaps) {
+        this.expeditionMaps = expeditionMaps;
+    }
+
+    public List<Registry> getRegistries() {
+        return registries;
+    }
+
+    public void setRegistries(List<Registry> registries) {
+        this.registries = registries;
+    }
 }

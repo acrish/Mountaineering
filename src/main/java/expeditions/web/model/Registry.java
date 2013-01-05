@@ -1,5 +1,7 @@
 package expeditions.web.model;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -20,11 +22,12 @@ public class Registry implements Serializable {
     @Column(name = "registry_id")
     private Integer id;
 
-    /*@ManyToOne
-    @JoinColumn(name="expedition_id", insertable = false, updatable = false,
-            nullable = false)
-    private Expedition exp;*/
+    @NaturalId
+    @ManyToOne
+    @JoinColumn(name="expedition_id", nullable = false)
+    private Expedition exp;
 
+    @NaturalId
     @ManyToOne
     @JoinColumn(name = "participant_id")
     private Participant participant;
@@ -35,8 +38,11 @@ public class Registry implements Serializable {
     @Column(name = "end_date")
     private Date endDate;
 
-    public Registry(/*Expedition exp,*/ Participant participant, Date startDate, Date endDate) {
-        /*this.exp = exp;*/
+    public Registry() {
+    }
+
+    public Registry(Expedition exp, Participant participant, Date startDate, Date endDate) {
+        this.exp = exp;
         this.participant = participant;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -45,14 +51,13 @@ public class Registry implements Serializable {
     public Integer getId() {
         return id;
     }
-
-    /*public Expedition getExp() {
+    public Expedition getExp() {
         return exp;
     }
 
     public void setExp(Expedition exp) {
         this.exp = exp;
-    }*/
+    }
 
     public Participant getParticipant() {
         return participant;
@@ -76,5 +81,18 @@ public class Registry implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean equals(Object reg) {
+        if (reg instanceof Registry) {
+            Registry r = (Registry)reg;
+            return r.participant.getId().equals(participant.getId()) &&
+                    r.exp.getExpId().equals(exp.getExpId());
+        }
+        return false;
+    }
+
+    public int hashCode() {
+        return participant.getId().hashCode() + 37 * exp.getExpId().hashCode();
     }
 }

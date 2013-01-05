@@ -31,7 +31,7 @@ public class ExpeditionMap implements Serializable{
     @Column(name = "picture_url")
     private String picUrl;
 
-    @OneToMany(cascade={CascadeType.ALL})
+    @OneToMany(cascade={CascadeType.ALL}, mappedBy = "expeditionMaps")
     @JoinColumn(name = "map_id")
     private Set<Expedition> expeditions;
 
@@ -42,6 +42,14 @@ public class ExpeditionMap implements Serializable{
         this.mountain = mountain;
         this.issueDate = issueDate;
         this.picUrl = picUrl;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getMountain() {
@@ -76,4 +84,8 @@ public class ExpeditionMap implements Serializable{
         this.expeditions = expeditions;
     }
 
+
+    public String toString() {
+        return String.format("%s - %s", mountain, issueDate.toString());
+    }
 }
