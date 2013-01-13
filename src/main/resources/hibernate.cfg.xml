@@ -26,14 +26,14 @@
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
 
-        <property name="hbm2ddl.auto">validate</property>
+        <property name="hbm2ddl.auto">create-drop</property>
 
         <mapping class="expeditions.web.model.Expedition"/>
         <mapping class="expeditions.web.model.ExpeditionMap"/>
-        <mapping class="expeditions.web.model.Bungalow"/>
+        <mapping class="expeditions.web.model.Hut"/>
         <mapping class="expeditions.web.model.Participant"/>
         <mapping class="expeditions.web.model.Registry"/>
-
+        <mapping class="expeditions.web.service.LatestExp"/>
 
     </session-factory>
 </hibernate-configuration>

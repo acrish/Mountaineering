@@ -1,5 +1,7 @@
 package expeditions.web.model;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -22,16 +24,18 @@ public class ExpeditionMap implements Serializable{
     @GeneratedValue
     private Integer id;
 
+    @NaturalId
     @Column(name = "mountain")
     private String mountain;
 
+    @NaturalId
     @Column(name = "issue_date")
     private Date issueDate;
 
     @Column(name = "picture_url")
     private String picUrl;
 
-    @OneToMany(cascade={CascadeType.ALL}, mappedBy = "expeditionMaps")
+    @OneToMany(cascade={CascadeType.ALL}, mappedBy = "expMap")
     @JoinColumn(name = "map_id")
     private Set<Expedition> expeditions;
 
@@ -85,7 +89,19 @@ public class ExpeditionMap implements Serializable{
     }
 
 
+    public boolean equals(Object obj) {
+        if (obj instanceof ExpeditionMap) {
+            ExpeditionMap map = (ExpeditionMap)obj;
+            return map.getMountain().equals(mountain) && map.getIssueDate().equals(issueDate);
+        }
+        return false;
+    }
+
+    public int hashCode() {
+        return mountain.hashCode() + 37 * issueDate.hashCode();
+    }
+
     public String toString() {
-        return String.format("%s - %s", mountain, issueDate.toString());
+        return String.format("%d) %s - %s", id, mountain, issueDate.toString());
     }
 }

@@ -1,10 +1,9 @@
 package expeditions.web;
 
-import expeditions.web.model.Expedition;
-import expeditions.web.model.ExpeditionMap;
-import expeditions.web.model.Participant;
-import expeditions.web.model.Registry;
+import expeditions.web.model.*;
+import expeditions.web.service.LatestExp;
 import expeditions.web.service.TransactionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -29,24 +28,31 @@ import java.util.List;
  */
 @Controller
 public class MainController {
-    private TransactionManager transactionManager = new TransactionManager();
+    @Autowired
+    private TransactionManager transactionManager;
+    @Autowired
+    private PopulateDB populator;
 
     public MainController() {
-
-        /*ExpeditionMap map = null;
-        try {
-            map = new ExpeditionMap("Grosslockner",
-                    new Date(new SimpleDateFormat("dd-MM-yyyy").parse("26-07-2012").getTime()), "some_map_url");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        transactionManager.addExpeditionMap(map);*/
     }
 
     @RequestMapping("/hello.htm")
     public ModelAndView init() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("hello");
+        populator.populate();
+
+        return mav;
+    }
+
+    @RequestMapping("/latestExpeditions.htm")
+    public ModelAndView latestExpeditons() {
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("latestExpProcedure");
+        List<LatestExp> latests = transactionManager.getLatest();
+        mav.addObject("latests", latests);
+
 
         return mav;
     }
@@ -64,6 +70,8 @@ public class MainController {
         mav.addObject("participants", transactionManager.getAllParticipants());
 
         mav.addObject("registries", transactionManager.getAllRegistries());
+
+        mav.addObject("huts", transactionManager.getAllHuts());
 
         return mav;
     }
@@ -147,6 +155,18 @@ public class MainController {
             });
     }
 
+    @InitBinder
+    public void mapBinder(WebDataBinder binder) {
+
+        binder.registerCustomEditor(ExpeditionMap.class,
+            new PropertyEditorSupport() {
+                public void setAsText(final String text) {
+                    setValue(transactionManager.getExpeditionMap(Integer.parseInt(
+                            text.substring(0, text.indexOf(")")))));
+                }
+            });
+    }
+
     @RequestMapping(value =  "/addParticipant.htm", method = RequestMethod.GET)
     public ModelAndView addParticipant() {
         Participant participant = new Participant();
@@ -186,6 +206,51 @@ public class MainController {
     public ModelAndView saveRegistry(@ModelAttribute("newReg") Registry reg) {
 
         transactionManager.addRegistry(reg);
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("hello");
+
+        return mav;
+    }
+
+    @RequestMapping(value =  "/addHut.htm", method = RequestMethod.GET)
+    public ModelAndView addHut() {
+        Hut hut = new Hut();
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("addHut");
+        mav.addObject("newHut", hut);
+        mav.addObject("maps", transactionManager.getAllExpeditionMaps());
+
+        return mav;
+    }
+
+    @RequestMapping(value =  "/saveHut.htm", method = RequestMethod.POST)
+    public ModelAndView saveHut(@ModelAttribute("newHut") Hut hut) {
+
+        transactionManager.addHut(hut);
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("hello");
+
+        return mav;
+    }
+
+    @RequestMapping(value =  "/addMap.htm", method = RequestMethod.GET)
+    public ModelAndView addMap() {
+        ExpeditionMap map = new ExpeditionMap();
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("addMap");
+        mav.addObject("newMap", map);
+
+        return mav;
+    }
+
+    @RequestMapping(value =  "/saveMap.htm", method = RequestMethod.POST)
+    public ModelAndView saveMap(@ModelAttribute("newMap") ExpeditionMap map) {
+
+        transactionManager.addExpeditionMap(map);
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("hello");

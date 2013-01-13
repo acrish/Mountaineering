@@ -25,7 +25,13 @@ public class Expedition implements Serializable {
     @Column(name="description")
     private String description;
 
-    @ManyToOne
+    @Column(name="start_village", nullable = true)
+    private String startVillage;
+
+    @Column(name="end_village", nullable = true)
+    private String endVillage;
+
+    @ManyToOne (optional = true)
     @JoinColumn(name="map_id",nullable = false)
     private ExpeditionMap expMap;
 
@@ -46,9 +52,14 @@ public class Expedition implements Serializable {
     public Expedition() {
     }
 
-    public Expedition(String name, String description) {
+    public Expedition(String name, String description, String startVillage, String endVillage,
+                      ExpeditionMap expMap)
+    {
         this.name = name;
         this.description = description;
+        this.startVillage = startVillage;
+        this.endVillage = endVillage;
+        this.expMap = expMap;
     }
 
     public Integer getExpId() {
@@ -83,22 +94,27 @@ public class Expedition implements Serializable {
         return String.format("%d) %s (%s)", expId, name, description);
     }
 
-    @ManyToOne(optional = true)
-    private ExpeditionMap expeditionMaps;
-
-    public ExpeditionMap getExpeditionMaps() {
-        return expeditionMaps;
-    }
-
-    public void setExpeditionMaps(ExpeditionMap expeditionMaps) {
-        this.expeditionMaps = expeditionMaps;
-    }
-
     public List<Registry> getRegistries() {
         return registries;
     }
 
     public void setRegistries(List<Registry> registries) {
         this.registries = registries;
+    }
+
+    public String getStartVillage() {
+        return startVillage;
+    }
+
+    public void setStartVillage(String startVillage) {
+        this.startVillage = startVillage;
+    }
+
+    public String getEndVillage() {
+        return endVillage;
+    }
+
+    public void setEndVillage(String endVillage) {
+        this.endVillage = endVillage;
     }
 }
