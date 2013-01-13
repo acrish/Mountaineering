@@ -4,7 +4,7 @@
   <body>
     <h1>Expeditions history</h1>
     <a href="<c:url value='/display_tables.htm'/>">Tables</a> <br/>
-    <a href="<c:url value='/latestExpeditions.htm'/>">Latest Expeditions</a>
-
+    <a href="<c:url value='/latestExpeditions.htm'/>">Latest Expeditions</a> <br/>
+    <a href="<c:url value='/aggregations.htm'/>">Aggregations</a>
   </body>
 </html>

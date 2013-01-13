@@ -17,6 +17,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "EXPEDITIONMAPS")
+@org.hibernate.annotations.Entity(
+		dynamicUpdate = true
+)
 public class ExpeditionMap implements Serializable{
 
     @Id

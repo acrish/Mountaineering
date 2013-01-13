@@ -84,7 +84,7 @@ BEGIN
 END</div>--%>
 <h2>Display latest expeditions</h2>
 <hr/>
-<h6>Expeditions since sept 2012 and participants</h6>
+<h4>Expeditions since sept 2012 and participants</h6>
 <table>
     <tr>
         <th>Mountain Name</th>
@@ -93,6 +93,8 @@ END</div>--%>
         <th>Expedition end village</th>
         <th>Participant name</th>
         <th>Participant birth date</th>
+        <th>Start date</th>
+        <th>End date</th>
     </tr>
     <c:forEach items="${latests}" var="item">
         <tr>
@@ -102,6 +104,8 @@ END</div>--%>
             <td><c:out value="${item.expend}"/></td>
             <td><c:out value="${item.pname}"/></td>
             <td><c:out value="${item.pdate}"/></td>
+            <td><c:out value="${item.rstart}"/></td>
+            <td><c:out value="${item.rend}"/></td>
         </tr>
     </c:forEach>
 </table>

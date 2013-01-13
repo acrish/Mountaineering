@@ -32,19 +32,22 @@
         <th>Id</th>
         <th>Mountain</th>
         <th>Issue Date</th>
+        <th>Options</th>
     </tr>
     <c:forEach items="${maps}" var="item">
         <tr>
             <td><c:out value="${item.id}"/></td>
             <td><c:out value="${item.mountain}"/></td>
             <td><c:out value="${item.issueDate}"/></td>
+            <td>
+                <a href="<c:url value='/editMap.htm?map=${item}'/>">Edit</a>
+            </td>
         </tr>
     </c:forEach>
 </table>
 <a href="<c:url value='/addMap.htm'/>">Add Expedition Map</a>
 <hr/>
 <h2>Display table EXPEDITIONS</h2>
-<hr/>
 <table>
     <tr>
         <th>Id</th>
@@ -61,12 +64,8 @@
             <td><c:out value="${item.description}"/></td>
             <td><c:out value="${item.expMap.id}"/></td>
             <td><c:out value="${item.startVillage}"/></td>
-            <td><c:out value="${item.endVillage}"/></td>
-            <td class="noborder">
-                <a href="<c:url value='/remove.htm'/>">Remove</a>
-            </td>
+            <td><c:out value="${item.endVillage}"/></td>>
         </tr>
-
     </c:forEach>
 </table>
 <a href="<c:url value='/addExpedition.htm'/>">Add Expedition</a>
@@ -118,6 +117,7 @@
         <th>Picture</th>
         <th>Capacity</th>
         <th>Price/person/night(RON)</th>
+        <%--<th>Options</th>--%>
     </tr>
     <c:forEach items="${huts}" var="item">
         <tr>
@@ -130,6 +130,9 @@
             <td><c:out value="${item.picUrl}"/></td>
             <td><c:out value="${item.capacity}"/></td>
             <td><c:out value="${item.price}"/></td>
+            <%--<td>
+                <a href="<c:url value='/remove.htm?hut=${item}'/>">Remove</a>
+            </td>--%>
         </tr>
     </c:forEach>
 </table>

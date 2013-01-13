@@ -77,11 +77,11 @@ public class MainController {
     }
 
     @RequestMapping(value = "/remove.htm")
-    public ModelAndView removeById() {
+    public ModelAndView removeById(@RequestParam Hut hut) {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("display_tables");
-
-        //transactionManager.remove(obj);
+        mav.setViewName("hello");
+        System.out.println("**************" + hut.getId());
+        transactionManager.removeHut(hut);
 
         return mav;
     }
@@ -125,7 +125,12 @@ public class MainController {
                         convertedDate = new java.sql.Date(DOB.parse(text).getTime());
                         setValue(convertedDate);
                     } catch (ParseException e) {
-                        e.printStackTrace();
+                        DOB = new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            convertedDate = new Date(DOB.parse(text).getTime());
+                            setValue(convertedDate);
+                        } catch (ParseException e1) {
+                        }
                     }
                 }
             });
@@ -247,13 +252,35 @@ public class MainController {
         return mav;
     }
 
-    @RequestMapping(value =  "/saveMap.htm", method = RequestMethod.POST)
-    public ModelAndView saveMap(@ModelAttribute("newMap") ExpeditionMap map) {
+    @RequestMapping(value =  "/editMap.htm", method = RequestMethod.GET)
+    public ModelAndView editMap(@RequestParam ExpeditionMap map) {
 
-        transactionManager.addExpeditionMap(map);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("editMap");
+        mav.addObject("newMap", map);
+
+        return mav;
+    }
+
+    @RequestMapping(value =  "/saveMap.htm", method = RequestMethod.POST)
+    public ModelAndView saveMap(@ModelAttribute("newMap") ExpeditionMap map, @RequestParam String flag) {
+        System.out.println(map.getId() + " " + flag);
+        if (flag.isEmpty())
+            transactionManager.addExpeditionMap(map);
+        else
+            transactionManager.updateExpeditionMap(map);
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("hello");
+
+        return mav;
+    }
+
+    @RequestMapping(value = "/aggregations.htm")
+    public ModelAndView getAggregations() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("reports");
+        /*mav.addObject("report1", transactionManager.getSomeHuts());*/
 
         return mav;
     }

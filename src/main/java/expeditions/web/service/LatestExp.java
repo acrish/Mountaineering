@@ -29,6 +29,8 @@ public class LatestExp implements Serializable {
             String expend;
             String pname;
             Date pdate;
+            Date rstart;
+            Date rend;
 
     public String toString() {
         return String.format("%s\t%s\t%s\t%s\t%s\t%s", mname, ename, expstart, expend, pname,
@@ -89,5 +91,21 @@ public class LatestExp implements Serializable {
 
     public void setPdate(Date pdate) {
         this.pdate = pdate;
+    }
+
+    public Date getRstart() {
+        return rstart;
+    }
+
+    public void setRstart(Date rstart) {
+        this.rstart = rstart;
+    }
+
+    public Date getRend() {
+        return rend;
+    }
+
+    public void setRend(Date rend) {
+        this.rend = rend;
     }
 }

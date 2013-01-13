@@ -43,6 +43,7 @@ public class Expedition implements Serializable {
         this.mountainName = mountainName;
     }
 
+    @Transient
     private String mountainName;
 
     @OneToMany(cascade={CascadeType.ALL})

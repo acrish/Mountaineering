@@ -128,4 +128,8 @@ public class Hut implements Serializable{
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public String toString() {
+        return name;
+    }
 }
